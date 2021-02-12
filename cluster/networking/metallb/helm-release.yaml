@@ -9,13 +9,21 @@ spec:
   chart:
     spec:
       chart: metallb
-      version: 2.0.4
+      version: 2.3.0
       sourceRef:
         kind: HelmRepository
         name: bitnami-charts
         namespace: flux-system
       interval: 10m
   values:
+    controller:
+      image:
+        repository: metallb/controller
+        tag: v0.9.5
+    speaker:
+      image:
+        repository: metallb/speaker
+        tag: v0.9.5
     configInline:
       address-pools:
         - name: default

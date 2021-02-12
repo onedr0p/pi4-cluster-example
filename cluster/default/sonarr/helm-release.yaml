@@ -22,6 +22,7 @@ spec:
       tag: v3.0.4.1126
     env:
       TZ: "America/New_York"
+      DOODAD: "true"
     ingress:
       enabled: false
     service:

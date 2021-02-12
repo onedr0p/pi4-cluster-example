@@ -1,0 +1,41 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: sonarr
+  namespace: default
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: sonarr
+      version: 8.3.0
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    controllerType: deployment
+    image:
+      repository: ghcr.io/k8s-at-home/sonarr
+      tag: v3.0.4.1126
+    env:
+      TZ: "America/New_York"
+    ingress:
+      enabled: false
+    service:
+      enabled: true
+      type: LoadBalancer
+      loadBalancerIP: 192.168.1.131
+      externalTrafficPolicy: Local
+    persistence:
+      config:
+        enabled: true
+        existingClaim: sonarr-data-pvc
+    resources:
+      requests:
+        memory: 250Mi
+        cpu: 500m
+      limits:
+        memory: 1500Mi
